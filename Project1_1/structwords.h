@@ -14,7 +14,9 @@ struct StructWords
 {
     StructWords();
     void writeToFile(QString engWord, QString rusWord);
-    QString readFile(int nextWord);
+    QStringList engWord(int nextWord);
+    QString rusWord(int nextWord);
+    int lengthDictionary(int nextWord);
 
 private:
 

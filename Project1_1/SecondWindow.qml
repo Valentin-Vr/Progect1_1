@@ -10,6 +10,7 @@ Window {
 
     property int nextWord: 0
     property var eng
+    property var rus
     Column {
         id: column
         width: parent.width
@@ -25,15 +26,14 @@ Window {
                 width: (parent.width - parent.spacing) / 2
                 height: 150
                 opacity: 0.5
-                Column {
-                    width: parent.width
-                    height: parent.height
-                    Label {
-                        id: engLabel
-                        color: "black"
-                        font.pixelSize: 20
-                        text: "eng"
-                        anchors.horizontalCenter: parent.horizontalCenter
+                Label {
+                    id: engLabel
+                    color: "black"
+                    font.pixelSize: 20
+                    text: "eng"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
                     }
                 }
             }
@@ -42,15 +42,14 @@ Window {
                 width: (parent.width - parent.spacing) / 2
                 height: 150
                 opacity: 0.5
-                Column{
-                    width: parent.width
-                    height: parent.height
-                    Label {
-                        id: rusLabel
-                        color: "black"
-                        font.pixelSize: 20
-                        text: "rus"
-                        anchors.horizontalCenter: parent.horizontalCenter
+                Label {
+                    id: rusLabel
+                    color: "black"
+                    font.pixelSize: 20
+                    text: "rus"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
                     }
                 }
             }
@@ -77,11 +76,14 @@ Window {
                 highlighted: true
                 onClicked: {
 
-                    eng = myData.readWords(0);
-                    engLabel.text = eng[1];
-//                    nextWord++;
+                    eng = myData.engWord(nextWord)[1];
+                    rus = myData.engWord(nextWord)[2];
+                    engLabel.text = eng;
+                    rusLabel.text = rus;
+                    nextWord++;
                 }
             }
+
         }
     }
 }

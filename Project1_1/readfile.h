@@ -21,7 +21,8 @@ public:
     QString readfile() const;
     Q_INVOKABLE QString openFile();
     Q_INVOKABLE void writeFile(QString engWord, QString rusWords);
-    Q_INVOKABLE QString readWords(int nextWord);
+    Q_INVOKABLE QStringList engWord(int nextWord);
+    Q_INVOKABLE QString rusWord(int nextWord);
 
 public slots:
     void setreadfile(QString readfile);

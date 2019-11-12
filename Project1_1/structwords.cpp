@@ -48,11 +48,21 @@ void StructWords::writeToFile(QString engWord, QString rusWord)
     mFile.close();
 }
 
-QString StructWords::readFile(int nextWord)
+QStringList StructWords::engWord(int nextWord)
 {
         qDebug() << dictionary[nextWord];
-        QString eng;
-        eng = dictionary[0].at(0);
-        qDebug() << eng;
-        return eng;
+//        QString eng;
+//        eng = dictionary[nextWord].at(0);
+//        qDebug() << eng;
+
+        return dictionary[nextWord];
+}
+
+QString StructWords::rusWord(int nextWord)
+{
+    qDebug() << dictionary[nextWord];
+    QString rus;
+    rus = dictionary[1].at(1);
+    qDebug() << rus;
+    return rus;
 }

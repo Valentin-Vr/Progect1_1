@@ -42,10 +42,16 @@ void ReadFile::writeFile(QString engWord, QString rusWords)
     entry.writeToFile(engWord, rusWords);
 }
 
-QString ReadFile::readWords(int nextWord)
+QStringList ReadFile::engWord(int nextWord)
 {
     StructWords entry;
-    entry.readFile(nextWord);
+    return entry.engWord(nextWord);
+}
+
+QString ReadFile::rusWord(int nextWord)
+{
+    StructWords entry;
+    return entry.rusWord(nextWord);
 }
 
 void ReadFile::setreadfile(QString readfile)
