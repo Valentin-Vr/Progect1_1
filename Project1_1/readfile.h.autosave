@@ -14,7 +14,9 @@ class ReadFile : public QObject
 
     Q_PROPERTY(QString readfile READ readfile WRITE setreadfile NOTIFY readfileChanged)
     QString m_readfile;
-
+    
+    int m_lineNumber;
+    
 public:
 
     ReadFile(QObject *parent = nullptr);
@@ -23,11 +25,18 @@ public:
     Q_INVOKABLE void writeFile(QString engWord, QString rusWords);
     Q_INVOKABLE QString engWord(int nextWord);
     Q_INVOKABLE QString rusWord(int nextWord);
-
+    
+    Q_PROPERTY(int lineNumber READ lineNumber WRITE setLineNumber NOTIFY lineNumberChanged);
+    
+    int lineNumber() const;
+    
 public slots:
     void setreadfile(QString readfile);
+    void setLineNumber(int lineNumber);
+    
 signals:
     void readfileChanged(QString readfile);
+    void lineNumberChanged(int lineNumber);
 };
 
 #endif // READFILE_H

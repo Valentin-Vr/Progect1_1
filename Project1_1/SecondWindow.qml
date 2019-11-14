@@ -9,8 +9,9 @@ Window {
     height: 320
 
     property int nextWord: 0
-    property var eng
-    property var rus
+    property int countButton: 0
+//    property var eng
+//    property var rus
     Column {
         id: column
         width: parent.width
@@ -75,15 +76,23 @@ Window {
                 height: 50
                 highlighted: true
                 onClicked: {
-
-                    eng = myData.engWord(nextWord)[1];
-                    rus = myData.engWord(nextWord)[2];
-                    engLabel.text = eng;
-                    rusLabel.text = rus;
+                    engLabel.text = myData.engWord(nextWord);
+                    countButton = 1;
                     nextWord++;
                 }
             }
-
+            Button {
+                text: qsTr("Забыл")
+                width: 180
+                height: 50
+                highlighted: true
+                onClicked: {
+                    if (countButton === 1) {
+                        rusLabel.text = myData.rusWord(nextWord - 1);
+                        countButton = 0;
+                    }
+                }
+            }
         }
     }
 }

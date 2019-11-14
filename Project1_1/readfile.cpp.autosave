@@ -54,6 +54,11 @@ QString ReadFile::rusWord(int nextWord)
     return entry.rusWord(nextWord);
 }
 
+int ReadFile::lineNumber() const
+{
+    return m_lineNumber;
+}
+
 void ReadFile::setreadfile(QString readfile)
 {
     if (m_readfile == readfile)
@@ -61,4 +66,13 @@ void ReadFile::setreadfile(QString readfile)
 
     m_readfile = readfile;
     emit readfileChanged(m_readfile);
+}
+
+void ReadFile::setLineNumber(int lineNumber)
+{
+    if (m_lineNumber == lineNumber)
+        return;
+    
+    m_lineNumber = lineNumber;
+    emit lineNumberChanged(m_lineNumber);
 }

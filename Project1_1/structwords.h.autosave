@@ -9,6 +9,7 @@
 #include <QTextStream>
 #include <iostream>
 #include <vector>
+#include "readfile.h"
 
 struct StructWords
 {

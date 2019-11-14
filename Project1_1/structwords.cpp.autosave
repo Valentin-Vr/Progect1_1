@@ -66,6 +66,7 @@ QString StructWords::rusWord(int nextWord)
 {
     if(nextWord >= dictionary.length()) {
         nextWord = 0;
+        ReadFile::setLineNumber(0);
         qDebug() << "nextWordNew =" << nextWord;
     }
     return dictionary[nextWord].at(3);
