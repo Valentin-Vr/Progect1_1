@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
-
 Window {
     id: mainWindow
     visible: true
@@ -69,7 +68,7 @@ Window {
 
         Rectangle {
             width: parent.width
-            height: 150
+            height: parent.height - rowRect.height - mainColumn.spacing * 3 - buttons.height
             color: "green"
             opacity: 0.5
 
@@ -77,7 +76,7 @@ Window {
                 id: labelFile
                 width: parent.width
                 height: parent.height
-                text: "asdasda"
+                text: "Содержимое файла"
                 font.pixelSize: 15
             }
 
@@ -95,7 +94,7 @@ Window {
                 text: "Добавить"
 
                 onClicked: {
-                    myData.writeFile(engWord.text, rusWords.text)
+                    myData.writeToFile(engWord.text, rusWords.text)
                 }
             }
             Button {

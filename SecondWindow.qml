@@ -20,12 +20,12 @@ Window {
         Row {
             id:rowRect
             width: parent.width
-            height: 150
+            height: parent.height - parent.spacing * 2 - buttons.height
             spacing: 10
             Rectangle {
                 color: "red"
                 width: (parent.width - parent.spacing) / 2
-                height: 150
+                height: parent.height
                 opacity: 0.5
                 Label {
                     id: engLabel
@@ -41,7 +41,7 @@ Window {
             Rectangle {
                 color: "blue"
                 width: (parent.width - parent.spacing) / 2
-                height: 150
+                height: parent.height
                 opacity: 0.5
                 Label {
                     id: rusLabel
@@ -76,8 +76,10 @@ Window {
                 height: 50
                 highlighted: true
                 onClicked: {
+//                    myData.setlineCount(nextWord);
+//                    nextWord = myData.lineCount();
                     engLabel.text = myData.engWord(nextWord);
-                    countButton = 1;
+                    countButton = nextWord;
                     nextWord++;
                 }
             }
@@ -87,8 +89,8 @@ Window {
                 height: 50
                 highlighted: true
                 onClicked: {
-                    if (countButton === 1) {
-                        rusLabel.text = myData.rusWord(nextWord - 1);
+                    if (countButton !== 0) {
+                        rusLabel.text = myData.rusWord(countButton);
                         countButton = 0;
                     }
                 }
