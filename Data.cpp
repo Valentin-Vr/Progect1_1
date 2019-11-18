@@ -1,4 +1,4 @@
-#include "Data.h"
+#include "data.h"
 
 Data::Data(QString currentEngWord, QString currentRusWords, QDate realDate, int valueForRepetition)
 {

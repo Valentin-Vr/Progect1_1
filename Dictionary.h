@@ -5,9 +5,10 @@
 #include <QFile>
 #include <QDebug>
 #include <QDir>
-#include "Data.h"
+#include "data.h"
 #include <QByteArray>
 #include <QTextStream>
+#include <QStandardPaths>
 
 class Dictionary : public QObject
 {
@@ -15,8 +16,6 @@ class Dictionary : public QObject
     Q_OBJECT
 
     QList<Data> dictionary;
-
-    int m_lineNumber;
 
     int m_lineCount;
 
@@ -29,22 +28,17 @@ public:
     Q_INVOKABLE QString engWord(int nextWord);
     Q_INVOKABLE QString rusWord(int nextWord);
 
-//    Q_PROPERTY(int lineCount READ lineCount WRITE setLineCount NOTIFY lineCountChanged)
-//    int lineCount() const
-//    {
-//        return m_lineCount;
-//    }
-//public slots:
-//    void setlineCount(int lineCount)
-//    {
-//        if (m_lineCount == lineCount)
-//            return;
+    Q_PROPERTY(int lineCount READ lineCount WRITE setLineCount NOTIFY lineCountChanged)
+    int lineCount() const;
 
-//        m_lineCount = lineCount;
-//        emit lineCountChanged(m_lineCount);
-//    }
-//signals:
-//    void lineCountChanged(int lineCount);
+private:
+    void randomShuffle();
+    void wordCheck(QString engWord, QString rusWord);
+
+public slots:
+    void setLineCount(int lineCount);
+signals:
+    void lineCountChanged(int lineCount);
 };
 
 #endif

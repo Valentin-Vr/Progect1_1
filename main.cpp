@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "Dictionary.h"
+#include "dictionary.h"
 
 int main(int argc, char *argv[])
 {

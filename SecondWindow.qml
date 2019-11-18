@@ -10,8 +10,8 @@ Window {
 
     property int nextWord: 0
     property int countButton: 0
-//    property var eng
-//    property var rus
+    //    property var eng
+    //    property var rus
     Column {
         id: column
         width: parent.width
@@ -76,9 +76,9 @@ Window {
                 height: 50
                 highlighted: true
                 onClicked: {
-//                    myData.setlineCount(nextWord);
-//                    nextWord = myData.lineCount();
+                    console.log(nextWord);
                     engLabel.text = myData.engWord(nextWord);
+                    nextWord = myData.lineCount;
                     countButton = nextWord;
                     nextWord++;
                 }
@@ -89,10 +89,7 @@ Window {
                 height: 50
                 highlighted: true
                 onClicked: {
-                    if (countButton !== 0) {
-                        rusLabel.text = myData.rusWord(countButton);
-                        countButton = 0;
-                    }
+                    rusLabel.text = myData.rusWord(countButton);
                 }
             }
         }

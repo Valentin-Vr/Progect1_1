@@ -1,9 +1,9 @@
 # ненужные файлы
 
 
-Project1_1/*.user
-
-Project1_1/asdfsdf.txt
+*.user
 
 
-Project1_1/*.autosave
+*.autosave
+
+*.gitignore
