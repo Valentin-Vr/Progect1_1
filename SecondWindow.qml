@@ -10,8 +10,6 @@ Window {
 
     property int nextWord: 0
     property int countButton: 0
-    //    property var eng
-    //    property var rus
     Column {
         id: column
         width: parent.width
@@ -20,7 +18,7 @@ Window {
         Row {
             id:rowRect
             width: parent.width
-            height: parent.height - parent.spacing * 2 - buttons.height
+            height: parent.height - parent.spacing * 3 - buttons.height - 50
             spacing: 10
             Rectangle {
                 color: "red"
@@ -92,6 +90,18 @@ Window {
                     rusLabel.text = myData.rusWord(countButton);
                 }
             }
+        }
+
+        Rectangle {
+            color: "yellow"
+            border {
+                color: "black"
+                width: 4
+            }
+
+            width: parent.width
+            height: 50
+            opacity: 0.5
         }
     }
 }

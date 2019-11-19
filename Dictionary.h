@@ -33,7 +33,7 @@ public:
 
 private:
     void randomShuffle();
-    void wordCheck(QString engWord, QString rusWord);
+    bool wordCheck(QString engWord, QString rusWord);
 
 public slots:
     void setLineCount(int lineCount);

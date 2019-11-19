@@ -4,6 +4,7 @@ static QString PATH = "C:/Users/User/Documents/Project1_1/dictionary.txt";
 
 Dictionary::Dictionary(QObject *parent) : QObject(parent)
 {
+    //Считывание данных из файла
     QDate currentDate(QDate::currentDate());
     QFile mFile(PATH);
     if(!mFile.exists()) {
@@ -11,10 +12,10 @@ Dictionary::Dictionary(QObject *parent) : QObject(parent)
     } else {
         mFile.open(QIODevice::ReadOnly | QIODevice::Text);
     }
-    QTextStream in(&mFile);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList valueString = line.split('/');
+    QTextStream file(&mFile);
+    while (!file.atEnd()) {
+        QString line = file.readLine();
+        QStringList valueString = line.split('*');
         QDate date = QDate::fromString(valueString[0], "ddMMyyyy");
         int dayDifference = date.daysTo(currentDate);
         int repetitionValue = valueString[1].toInt();
@@ -28,38 +29,35 @@ Dictionary::Dictionary(QObject *parent) : QObject(parent)
             Data addToDictionary(valueString[2], valueString[3], QDate::fromString(valueString[0], "ddMMyyyy"), valueString[1].toInt());
             dictionary.push_back(addToDictionary);
         }
-        //                Data addToDictionary(valueString[2], valueString[3], QDate::fromString(valueString[0], "ddMMyyyy"), valueString[1].toInt());
-        //                dictionary.push_back(addToDictionary);
     }
     qDebug() << "Количество слов =" << dictionary.size();
-    //    for (int i = 0; i < dictionary.size(); i++) {
-    //        qDebug() << dictionary[i].engWord <<  dictionary[i].rusWords << dictionary[i].date << dictionary[i].repetitionValue;
-    //    }
-
     mFile.close();
 }
 
 void Dictionary::writeToFile(QString engWord, QString rusWord)
 {
-    QDate currentDate(QDate::currentDate());
-    int repetitionValue = 0;
-    QFile mFile(PATH);
-    if(!mFile.exists()) {
-        qDebug() << "Файл не существует";
-    } else {
-        mFile.open(QIODevice::Append | QIODevice::Text);
-        qDebug() << "Файл открыт";
-        QTextStream writeStream(&mFile);
-        writeStream << currentDate.toString("ddMMyyyy") << "/" << repetitionValue << "/" << engWord << "/" << rusWord << "/" << "\n";
-        mFile.close();
+    //Запись в файл нового слова
+    if (wordCheck(engWord, rusWord) == true) {
+        QDate currentDate(QDate::currentDate());
+        int repetitionValue = 0;
+        QFile mFile(PATH);
+        if(!mFile.exists()) {
+            qDebug() << "Файл не существует";
+        } else {
+            mFile.open(QIODevice::Append | QIODevice::Text);
+            QTextStream writeStream(&mFile);
+            writeStream << currentDate.toString("ddMMyyyy") << "*" << repetitionValue << "*" << engWord << "*" << rusWord << "*" << "\n";
+            mFile.close();
+        }
+        Data newData(engWord, rusWord, currentDate, repetitionValue);
+        dictionary.push_back(newData);
     }
-    Data newData(engWord, rusWord, currentDate, repetitionValue);
-    dictionary.push_back(newData);
-//    qDebug() << "Количество слов =" << dictionary.size();
+    qDebug() << "Количество слов =" << dictionary.size();
 }
 
 QString Dictionary::openFile()
 {
+    //Открытие файла
     QFile mFile(PATH);
     if(!mFile.exists()) {
         qDebug() << "Файл не существует";
@@ -75,7 +73,6 @@ QString Dictionary::openFile()
 
 QString Dictionary::engWord(int nextWord)
 {
-//    qDebug() << "size =" << dictionary.size() << "nextWord =" << nextWord;
     if (nextWord > dictionary.size() - 1) {
         nextWord = 0;
         randomShuffle();
@@ -97,6 +94,7 @@ int Dictionary::lineCount() const
 
 void Dictionary::randomShuffle()
 {
+    //Пересортировка слов в словаре после первого и последующих кругов повторения
     if (dictionary.size() > 3) {
         QList<Data> temporaryList;
         int i = 0;
@@ -106,9 +104,6 @@ void Dictionary::randomShuffle()
                     dictionary[i * 2].date,
                     dictionary[i * 2].repetitionValue);
             temporaryList.push_back(temporary);
-//            qDebug() << "Размер временного листа" << temporaryList.size();
-//            qDebug() << "Слово dictionary" << i * 2 << dictionary[i * 2].engWord;
-//            qDebug() << "Слово temporary" << i << temporaryList[i].engWord;
             i++;
         }
         i = 0;
@@ -118,23 +113,50 @@ void Dictionary::randomShuffle()
                     dictionary[i * 2 + 1].date,
                     dictionary[i * 2 + 1].repetitionValue);
             temporaryList.push_back(temporary);
-//            qDebug() << "Размер временного листа" << temporaryList.size();
-//            qDebug() << "Слово dictionary" << i * 2 + 1 << dictionary[i * 2 + 1].engWord;
-//            qDebug() << "Слово temporary" << temporaryList.size() - 1 << temporaryList[temporaryList.size() - 1].engWord;
             i++;
         }
-//        qDebug() << "Размер временного листа" << temporaryList.size();
         for (int i = 0; i < temporaryList.size(); i++) {
             dictionary[i] = temporaryList[i];
         }
     }
 }
 
-void Dictionary::wordCheck(QString engWord, QString rusWord)
+bool Dictionary::wordCheck(QString engWord, QString rusWord)
 {
-    if (engWord == "" || rusWord == "") {
-
+    //Проверка нового слова на необходимость добавления в словарь
+    if ((engWord.size() > 1 && rusWord.size() > 1) || (engWord.size() == 1 && engWord[0] == QChar('i'))) {
+        //Проверка на наличие символа "*" в engWord
+        for (int i = 0; i < engWord.size(); i++) {
+            if (engWord[i] == QChar('*')) {
+                return false;
+            }
+        }
+        //Проверка на наличие символа "*" в rusWord
+        for (int i = 0; i < rusWord.size(); i++) {
+            if (rusWord[i] == QChar('*')) {
+                return false;
+            }
+        }
+        //Проверка на наличие engWord в словаре
+        QFile mFile(PATH);
+        if(!mFile.exists()) {
+            qDebug() << "Файл не существует";
+        } else {
+            mFile.open(QIODevice::ReadOnly | QIODevice::Text);
+        }
+        QTextStream file(&mFile);
+        while (!file.atEnd()) {
+            QString line = file.readLine();
+            QStringList valueString = line.split('*');
+            if (engWord == valueString[2]) {
+                mFile.close();
+                return false;
+            }
+        }
+        mFile.close();
+        return true;
     }
+    return false;
 }
 
 void Dictionary::setLineCount(int lineCount)
