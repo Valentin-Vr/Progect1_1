@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>SecondWindow.qml</file>
         <file>dictionary.txt</file>
+        <file>EditBox.qml</file>
+        <file>OutputField.qml</file>
     </qresource>
 </RCC>

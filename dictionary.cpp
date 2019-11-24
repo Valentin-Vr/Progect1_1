@@ -57,6 +57,10 @@ void Dictionary::writeToFile(QString engWord, QString rusWord)
 
 QString Dictionary::openFile()
 {
+    //Открытие блокнота
+        QProcess process;
+        process.start("notepad C:/Users/User/Documents/Project1_1/dictionary.txt");
+        process.waitForFinished();
     //Открытие файла
     QFile mFile(PATH);
     if(!mFile.exists()) {
@@ -66,7 +70,6 @@ QString Dictionary::openFile()
     }
     QByteArray data;
     data = mFile.readAll();
-    //    qDebug() << QString(data);
     mFile.close();
     return QString(data);
 }
@@ -84,6 +87,24 @@ QString Dictionary::engWord(int nextWord)
 QString Dictionary::rusWord(int nextWord)
 {
     return dictionary[nextWord].rusWords;
+}
+
+int Dictionary::numberOfLines()
+{
+    int numberOfLines = 0;
+    QFile mFile(PATH);
+    if(!mFile.exists()) {
+        qDebug() << "Файл не существует";
+    } else {
+        mFile.open(QIODevice::Append | QIODevice::Text);
+        QTextStream file(&mFile);
+        while (!file.atEnd()) {
+            numberOfLines++;
+        }
+        mFile.close();
+    }
+    qDebug() << "numberOfLines" << numberOfLines;
+    return numberOfLines;
 }
 
 

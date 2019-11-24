@@ -15,43 +15,63 @@ Window {
         width: parent.width
         height: parent.height
         spacing: 10
+
         Row {
             id:rowRect
             width: parent.width
             height: parent.height - parent.spacing * 3 - buttons.height - 50
             spacing: 10
-            Rectangle {
-                color: "red"
+
+            OutputField {
+                id: engWord
                 width: (parent.width - parent.spacing) / 2
                 height: parent.height
-                opacity: 0.5
-                Label {
-                    id: engLabel
-                    color: "black"
-                    font.pixelSize: 20
-                    text: "eng"
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        verticalCenter: parent.verticalCenter
-                    }
-                }
+                rectTitleColor: "red"
+                rectTitleOpacity: 0.5
+                titleText: "Слово"
             }
-            Rectangle {
-                color: "blue"
+
+            OutputField {
+                id: rusWord
                 width: (parent.width - parent.spacing) / 2
                 height: parent.height
-                opacity: 0.5
-                Label {
-                    id: rusLabel
-                    color: "black"
-                    font.pixelSize: 20
-                    text: "rus"
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        verticalCenter: parent.verticalCenter
-                    }
-                }
+                rectOutFieldColor: "green"
+                rectOutFieldOpacity: 0.5
+                titleText: "Перевод"
             }
+
+//            Rectangle {
+//                color: "red"
+//                width: (parent.width - parent.spacing) / 2
+//                height: parent.height
+//                opacity: 0.5
+//                Label {
+//                    id: engLabel
+//                    color: "black"
+//                    font.pixelSize: 20
+//                    text: "eng"
+//                    anchors {
+//                        horizontalCenter: parent.horizontalCenter
+//                        verticalCenter: parent.verticalCenter
+//                    }
+//                }
+//            }
+//            Rectangle {
+//                color: "blue"
+//                width: (parent.width - parent.spacing) / 2
+//                height: parent.height
+//                opacity: 0.5
+//                Label {
+//                    id: rusLabel
+//                    color: "black"
+//                    font.pixelSize: 20
+//                    text: "rus"
+//                    anchors {
+//                        horizontalCenter: parent.horizontalCenter
+//                        verticalCenter: parent.verticalCenter
+//                    }
+//                }
+//            }
         }
 
         Row {
@@ -75,7 +95,7 @@ Window {
                 highlighted: true
                 onClicked: {
                     console.log(nextWord);
-                    engLabel.text = myData.engWord(nextWord);
+                    engWord.outFieldText = myData.engWord(nextWord);
                     nextWord = myData.lineCount;
                     countButton = nextWord;
                     nextWord++;
@@ -87,7 +107,7 @@ Window {
                 height: 50
                 highlighted: true
                 onClicked: {
-                    rusLabel.text = myData.rusWord(countButton);
+                    rusWord.outFieldText = myData.rusWord(countButton);
                 }
             }
         }

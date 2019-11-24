@@ -8,7 +8,7 @@
 #include "data.h"
 #include <QByteArray>
 #include <QTextStream>
-#include <QStandardPaths>
+#include <QProcess>
 
 class Dictionary : public QObject
 {
@@ -27,6 +27,7 @@ public:
     Q_INVOKABLE void writeToFile(QString engWord, QString rusWord);
     Q_INVOKABLE QString engWord(int nextWord);
     Q_INVOKABLE QString rusWord(int nextWord);
+    Q_INVOKABLE int numberOfLines();
 
     Q_PROPERTY(int lineCount READ lineCount WRITE setLineCount NOTIFY lineCountChanged)
     int lineCount() const;
